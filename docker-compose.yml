@@ -1,0 +1,40 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: worpressdb 
+      MYSQL_USER: rick 
+      MYSQL_PASSWORD: Snorlax
+    volumes:
+       - ./mysqlContainer:/var/lib/mysql
+  phpmyadmin:
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 127.0.0.1:8084:80
+    environment:
+      PMA_HOST: mysql
+      MYSQL_USER: koji
+      MYSQL_ROOT_PASSWORD: zetsu20XX
+      UPLOAD_LIMIT: 100M
+
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 127.0.0.1:8080:80
+      - 127.0.0.1:443:443
+    environment:      
+      WORDPRESS_DB_NAME: "worpressdb"
+      WORDPRESS_DB_USER: "rick"
+      WORDPRESS_DB_PASSWORD: "Snorlax"
+    volumes:
+      - ./wordpress:/var/www/html/
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
