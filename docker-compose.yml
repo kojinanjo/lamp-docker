@@ -22,7 +22,7 @@ services:
     environment:
       PMA_HOST: mysql
       MYSQL_USER: koji
-      MYSQL_ROOT_PASSWORD: zetsu20XX
+      MYSQL_ROOT_PASSWORD: test
       UPLOAD_LIMIT: 100M
 
   wordpress:
